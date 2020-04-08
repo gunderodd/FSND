@@ -5,7 +5,7 @@
 import json
 import dateutil.parser
 import babel
-from flask import Flask, render_template, request, Response, flash, redirect, url_for, abort, jsonify
+from flask import Flask, render_template, request, Response, flash, redirect, url_for, abort, jsonify, make_response
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 import logging
@@ -249,25 +249,35 @@ def create_venue_form():
 @app.route('/venues/create', methods=['POST'])
 def create_venue_submission():
   error = False
+  flash_name = ""
 
   try:
+    print('hello')
     name = request.get_json()['name']
-    venue = Venue(name = name)
+    city = request.get_json()['city']
+    state = request.get_json()['state']
+    address = request.get_json()['address']
+    phone = request.get_json()['phone']
+    genres = request.get_json()['genres']
+    facebook_link = request.get_json()['facebook_link']
+    venue = Venue(name = name, city = city, state = state, address = address, phone = phone, genres = genres, facebook_link = facebook_link)
 
     db.session.add(venue)
     db.session.commit()
-    # body['description'] = todo.description
+    flash_name = venue.name
   except:
     error = True
     db.session.rollback()
-    # flash('An error occurred. Venue ' + venue.name + ' could not be listed.')
+    flash('An error occurred. Venue ' + flash_name + ' could not be listed.')
   finally:
     db.session.close()
   if error:
     abort(400)
   if not error:
-    flash('Venue ' + request.form['name'] + ' was successfully listed!')
+    flash('Venue ' + flash_name + ' was successfully listed!')
+    print('heeeellllloooooo')
     return render_template('pages/home.html')
+
 
 
 
