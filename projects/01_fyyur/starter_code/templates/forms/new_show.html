@@ -2,7 +2,7 @@
 {% block title %}New Show Listing{% endblock %}
 {% block content %}
   <div class="form-wrapper">
-    <form method="post" class="form">
+    <form id='form' method="post" class="form">
       <h3 class="form-heading">List a new show</h3>
       <div class="form-group">
         <label for="artist_id">Artist ID</label>
@@ -21,4 +21,34 @@
       <input type="submit" value="Create Venue" class="btn btn-primary btn-lg btn-block">
     </form>
   </div>
+
+{% block script %}
+
+  <script>
+    const form = document.getElementById('form')
+
+    form.onsubmit = e => {
+        e.preventDefault()
+        fetch('/shows/create', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            redirect: true
+        },
+        body: JSON.stringify({
+            artist_id: form.artist_id.value,
+            venue_id: form.venue_id.value,
+            start_time: form.start_time.value,
+          }),
+        })
+        .then(res => console.log(res))
+        .then(setTimeout(function() {
+            window.location.href = '/'
+        }, 1000))
+    }
+
+  </script>
+  
+{% endblock %}
+
 {% endblock %}

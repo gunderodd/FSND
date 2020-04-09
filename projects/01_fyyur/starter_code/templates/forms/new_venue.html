@@ -47,22 +47,49 @@
 
     form.onsubmit = e => {
         e.preventDefault()
+    //     fetch('/venues/create', {
+    //         method: 'POST',
+    //         body: JSON.stringify({
+    //           name: form.name.value,
+    //           city: form.city.value,
+    //           state: form.state.value,
+    //           address: form.address.value,
+    //           phone: form.phone.value,
+    //           genres: form.genres.value,
+    //           facebook_link: form.facebook_link.value
+    //         }),
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             redirect: true
+    //         },
+    //     .then(res => console.log(res))
+    //     .then(setTimeout(function(){
+    //         window.location.href = '/index'
+    //     }, 1000))
+    //   })
+    //   // console.log(form.name.value)
+    // }
+
         fetch('/venues/create', {
-            method: 'POST',
-            body: JSON.stringify({
-              name: form.name.value,
-              city: form.city.value,
-              state: form.state.value,
-              address: form.address.value,
-              phone: form.phone.value,
-              genres: form.genres.value,
-              facebook_link: form.facebook_link.value
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            }
-      })
-      // console.log(form.name.value)
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            redirect: true
+        },
+        body: JSON.stringify({
+            name: form.name.value,
+            city: form.city.value,
+            state: form.state.value,
+            address: form.address.value,
+            phone: form.phone.value,
+            genres: form.genres.value,
+            facebook_link: form.facebook_link.value
+          }),
+        })
+        .then(res => console.log(res))
+        .then(setTimeout(function() {
+            window.location.href = '/'
+        }, 1000))
     }
 
   </script>
